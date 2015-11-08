@@ -42,3 +42,9 @@ def test_timer():
     with stub_client() as stub:
         statsdecor.timer('a.metric')
         assert stub.client.timer.called, 'Should be called'
+
+
+def test_configure_and_create():
+    statsdecor.configure(port=9999)
+    client = statsdecor.client()
+    assert client._addr[1] == 9999, 'port should match'
