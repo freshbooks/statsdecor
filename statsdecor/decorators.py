@@ -3,8 +3,7 @@ from statsdecor import client
 
 
 def increment(name):
-    """
-    Function decorator for incrementing a statsd stat whenever
+    """Function decorator for incrementing a statsd stat whenever
     a function is invoked.
 
     >>> from statsdecor.decorators import increment
@@ -24,8 +23,7 @@ def increment(name):
 
 
 def decrement(name):
-    """
-    Function decorator for decrementing a statsd stat whenever
+    """Function decorator for decrementing a statsd stat whenever
     a function is invoked.
 
     >>> from statsdecor.decorators import decrement
@@ -45,8 +43,7 @@ def decrement(name):
 
 
 def timed(name):
-    """
-    Function decorator for tracking timing information
+    """Function decorator for tracking timing information
     on a function's invocation.
 
     >>> from statsdecor.decorators import timed

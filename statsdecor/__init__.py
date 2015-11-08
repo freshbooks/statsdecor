@@ -7,8 +7,7 @@ _config = {}
 
 
 def configure(*args, **kwargs):
-    """
-    Configure the module level statsd client that will
+    """Configure the module level statsd client that will
     be used in all library operations.
 
     Frequently used from application initialization code.
@@ -25,8 +24,7 @@ def configure(*args, **kwargs):
 
 
 def client():
-    """
-    Get a client instance with the module level configuration.
+    """Get a client instance with the module level configuration.
 
     For docs on the statsd client, see
     http://statsd.readthedocs.org/en/latest/types.html
@@ -38,8 +36,7 @@ def client():
 
 
 def incr(name, value=1, rate=1):
-    """
-    Increment a metric by value.
+    """Increment a metric by value.
 
     >>> import statsdecor
     >>> statsdecor.incr('my.metric')
@@ -48,8 +45,7 @@ def incr(name, value=1, rate=1):
 
 
 def decr(name, value=1, rate=1):
-    """
-    Decrement a metric by value.
+    """Decrement a metric by value.
 
     >>> import statsdecor
     >>> statsdecor.decr('my.metric')
@@ -58,8 +54,7 @@ def decr(name, value=1, rate=1):
 
 
 def gauge(name, value, rate=1):
-    """
-    Set the value for a gauge.
+    """Set the value for a gauge.
 
     >>> import statsdecor
     >>> statsdecor.gauge('my.metric', 10)
@@ -68,8 +63,7 @@ def gauge(name, value, rate=1):
 
 
 def timer(name):
-    """
-    Time a block of code with a context manager.
+    """Time a block of code with a context manager.
 
     >>> import statsdecor
     >>> with statsdecor.timer('my.timer'):
