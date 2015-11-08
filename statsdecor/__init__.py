@@ -50,7 +50,7 @@ def decr(name, value=1, rate=1):
     >>> import statsdecor
     >>> statsdecor.decr('my.metric')
     """
-    client().incr(name, value, rate)
+    client().decr(name, value, rate)
 
 
 def gauge(name, value, rate=1):
