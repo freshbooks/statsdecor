@@ -1,0 +1,58 @@
+# Statsdecor
+
+A set of decorators and helper methods for adding statsd metrics to applications.
+
+## Installation
+
+You can use pip to install statsdecor:
+
+```shell
+pip install statsdecor
+```
+
+## Configuration
+
+You can use `statsdecor.configure` to configure how statsd clients will be
+created:
+
+```python
+import statsdecor
+
+statsdecor.configure(host='localhost', prefix='superapp.')
+```
+
+Configuration is generally setup during your application's bootstrap. Once
+set configuration values are re-used in all clients that `statsdecor` creates.
+
+
+## Usage
+
+You can track metrics with either the module functions, or decorators. Incrementing
+and decrementing counters looks like:
+
+### Metric functions
+
+```python
+import statsdecor
+
+statsdecor.incr('save.succeeded')
+statsdecor.decr('attempts.remaining')
+```
+
+Counters can also be set through decorators:
+
+```python
+import statsdecor.decorators as stats
+
+@stats.increment('save.succeeded')
+def save(self):
+    pass
+
+@stats.decrement('attempts.remaining')
+def attempt():
+    pass
+```
+
+When using decorators, metrics are only tracked if the decorated function
+does not raise an error.
+
