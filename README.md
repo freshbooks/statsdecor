@@ -37,9 +37,10 @@ import statsdecor
 
 statsdecor.incr('save.succeeded')
 statsdecor.decr('attempts.remaining')
+statsdecor.gauge('sessions.active', 9001)
 ```
 
-Counters can also be set through decorators:
+Counters and timers can also be set through decorators:
 
 ```python
 import statsdecor.decorators as stats
@@ -51,8 +52,11 @@ def save(self):
 @stats.decrement('attempts.remaining')
 def attempt():
     pass
+
+@stats.timed('api_request.duration')
+def perform_request(self, req)
+    pass
 ```
 
 When using decorators, metrics are only tracked if the decorated function
 does not raise an error.
-
