@@ -36,7 +36,7 @@ clean-test:
 	rm -fr htmlcov/
 
 lint:
-	flake8 sqlcop tests
+	flake8 statsdecor tests
 
 test:
 	py.test tests/
