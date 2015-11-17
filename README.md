@@ -1,5 +1,8 @@
 # Statsdecor
 
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
+[![Build Status](https://api.travis-ci.org/freshbooks/statsdecor.svg)](https://travis-ci.org/freshbooks/statsdecor)
+
 A set of decorators and helper methods for adding statsd metrics to applications.
 
 ## Installation
