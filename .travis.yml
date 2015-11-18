@@ -6,9 +6,23 @@ python:
  - "3.3"
  - "3.4"
 
+env:
+  global:
+    - DEFAULT=1
+
+matrix:
+  fast_finish: true
+  include:
+    - python: 2.7
+      env: COVERALLS=1 DEFAULT=0
+
 install: "pip install -r requirements-dev.txt"
 
-script: "make test"
+script:
+  - sh -c "if [ '$DEFAULT' = '1' ]; then make test; fi"
+  - sh -c "if [ '$COVERALLS' = '1' ]; then make coveralls; fi"
+
+after_success: "coveralls"
 
 sudo: false
 
