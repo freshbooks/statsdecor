@@ -48,3 +48,13 @@ def test_configure_and_create():
     statsdecor.configure(port=9999)
     client = statsdecor.client()
     assert client._addr[1] == 9999, 'port should match'
+
+def test_timing():
+    with stub_client() as stub:
+        statsdecor.timing('a.metric', 314159265359)
+        stub.client.timing.assert_called_with('a.metric', 314159265359, 1)
+
+def test_timing__with_value_and_rate():
+    with stub_client() as stub:
+        statsdecor.timing('a.metric', 314159265359, 0.1)
+        stub.client.timing.assert_called_with('a.metric', 314159265359, 0.1)

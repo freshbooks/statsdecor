@@ -71,3 +71,11 @@ def timer(name):
     Some output
     """
     return client().timer(name)
+
+def timing(name, delta, rate=1):
+    """Sends new timing information. `delta` is in milliseconds.
+
+    >>> import statsdecor
+    >>> statsdecor.timing('my.metric', 314159265359)
+    """
+    return client().timing(name, delta, rate)
