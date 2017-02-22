@@ -4,6 +4,7 @@ import logging
 
 log = logging.getLogger(__name__)
 _config = {}
+_stats_client = None
 
 
 def configure(*args, **kwargs):
@@ -19,8 +20,12 @@ def configure(*args, **kwargs):
             prefix='myapp',
             maxudpsize=25)
     """
+    global _stats_client
+
     log.debug('statsd.configure(%s)' % kwargs)
     _config.update(kwargs)
+
+    _stats_client = statsd.StatsClient(**_config)
 
 
 def client():
@@ -32,7 +37,7 @@ def client():
     For the code, see
     https://github.com/jsocol/pystatsd/blob/master/statsd/client.py
     """
-    return statsd.StatsClient(**_config)
+    return _stats_client
 
 
 def incr(name, value=1, rate=1):
