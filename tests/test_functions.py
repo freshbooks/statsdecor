@@ -1,5 +1,14 @@
 import statsdecor
+import statsd
 from tests.conftest import stub_client
+
+
+def test_client_error_no_config(monkeypatch):
+    # When the client hasn't been initialized,
+    # an exception should be raised by client()
+    monkeypatch.setattr(statsdecor, '_stats_client', None)
+    client = statsdecor.client()
+    assert isinstance(client, statsd.StatsClient)
 
 
 def test_incr():
