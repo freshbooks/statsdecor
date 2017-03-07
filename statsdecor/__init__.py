@@ -37,6 +37,8 @@ def client():
     For the code, see
     https://github.com/jsocol/pystatsd/blob/master/statsd/client.py
     """
+    if _stats_client is None:
+        configure({})
     return _stats_client
 
 

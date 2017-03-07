@@ -15,8 +15,8 @@ pip install statsdecor
 
 ## Configuration
 
-You can use `statsdecor.configure` to configure how statsd clients will be
-created:
+You must use `statsdecor.configure` to configure the internal statsd client before
+calling other methods:
 
 ```python
 import statsdecor
