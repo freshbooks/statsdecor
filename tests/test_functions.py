@@ -1,5 +1,6 @@
 import statsdecor
 import statsd
+from datadog import DogStatsd
 from tests.conftest import stub_client
 from statsdecor.clients import (
     DogStatsdClient,
@@ -74,6 +75,11 @@ class TestStatsdDefaultClient(BaseFunctionTestCase):
         client = statsdecor.client()
         assert client._addr[1] == 9999, 'port should match'
 
+    def test_configure_and_create__with_fields_not_in_whitelist(self):
+        statsdecor.configure(random=1234, field=33, port=1234)
+        client = statsdecor.client()
+        assert isinstance(client, statsd.StatsClient)
+        assert client._addr[1] == 1234, 'port should match'
 
 class TestDogStatsdClient(BaseFunctionTestCase):
     def setup(self):
@@ -86,7 +92,12 @@ class TestDogStatsdClient(BaseFunctionTestCase):
         client = statsdecor.client()
         assert client.port == 9999, 'port should match'
 
-    def test_configure_and_create__with_maxudpsize(self):
+    def test_configure_and_create__with_prefix(self):
+        statsdecor.configure(prefix='statsdecor')
+        client = statsdecor.client()
+        assert client.namespace == 'statsdecor', 'namespace should match prefix'
+
+    def test_configure_and_create__with_fields_not_in_whitelist(self):
         statsdecor.configure(maxudpsize=512)
         client = statsdecor.client()
-        assert client.port == 9999, 'port should match'
+        assert isinstance(client, DogStatsd)
