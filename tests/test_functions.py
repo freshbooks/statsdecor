@@ -62,10 +62,7 @@ class TestStatsdDefaultClient(BaseFunctionTestCase):
         self.client_class = StatsdClient
         statsdecor.configure(vendor='')
 
-    def test_client_error_no_config(self, monkeypatch):
-        # TODO: DIG UP HISTORY what is the below referring to ?
-        # When the client hasn't been initialized,
-        # an exception should be raised by client()
+    def test_client_created_if_no_existing_client__with_no_config(self, monkeypatch):
         monkeypatch.setattr(statsdecor, '_stats_client', None)
         client = statsdecor.client()
         assert isinstance(client, statsd.StatsClient)

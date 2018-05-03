@@ -16,9 +16,9 @@ def _create_client(**config):
         client_config = _create_client_config(config, {'host', 'port'})
         client_config.update(namespace=config.get('prefix')) if config.get('prefix') else None
         return DogStatsdClient(**client_config)
-    else:
-        client_config = _create_client_config(config, {'host', 'port', 'prefix', 'maxudpsize'})
-        return StatsdClient(**client_config)
+
+    client_config = _create_client_config(config, {'host', 'port', 'prefix', 'maxudpsize'})
+    return StatsdClient(**client_config)
 
 def _create_client_config(raw_config, whitelist_fields):
     client_config = {

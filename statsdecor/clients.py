@@ -58,4 +58,4 @@ class StatsdClient(StatsClient):
 
     def _assert_no_tags(self, tags):
         if tags:
-            raise ValueError('Tagging is not supported by StatsdClient.\n tags: {}'.format(tags))
+            raise ValueError(u'Tagging is not supported by StatsdClient.\n tags: {}'.format(tags))
