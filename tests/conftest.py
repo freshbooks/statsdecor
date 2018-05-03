@@ -1,10 +1,9 @@
 from mock import patch, Mock
-from statsd import StatsClient
 
 
-def stub_client(path='statsdecor.client'):
+def stub_client(client_class, path='statsdecor.client'):
     """Factory for StubClient context managers"""
-    return StubClient(path)
+    return StubClient(path, client_class)
 
 
 class StubClient(object):
@@ -12,11 +11,12 @@ class StubClient(object):
     stubbing out the statsd client factory in the
     library.
     """
-    def __init__(self, path):
+    def __init__(self, path, client_class):
         self.patcher = patch(path)
+        self.client_class = client_class
 
     def __enter__(self):
-        self.client = Mock(spec=StatsClient)
+        self.client = Mock(spec=self.client_class)
         stub_func = self.patcher.start()
         stub_func.return_value = self.client
         return self

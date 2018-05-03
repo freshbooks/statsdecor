@@ -2,7 +2,7 @@ from functools import wraps
 from statsdecor import client
 
 
-def increment(name):
+def increment(name, tags=None):
     """Function decorator for incrementing a statsd stat whenever
     a function is invoked.
 
@@ -16,13 +16,13 @@ def increment(name):
         def decorator(*args, **kwargs):
             stats = client()
             ret = f(*args, **kwargs)
-            stats.incr(name)
+            stats.incr(name, tags=tags)
             return ret
         return decorator
     return wrap
 
 
-def decrement(name):
+def decrement(name, tags=None):
     """Function decorator for decrementing a statsd stat whenever
     a function is invoked.
 
@@ -36,13 +36,13 @@ def decrement(name):
         def decorator(*args, **kwargs):
             stats = client()
             ret = f(*args, **kwargs)
-            stats.decr(name)
+            stats.decr(name, tags=tags)
             return ret
         return decorator
     return wrap
 
 
-def timed(name):
+def timed(name, tags=None):
     """Function decorator for tracking timing information
     on a function's invocation.
 
@@ -55,7 +55,7 @@ def timed(name):
         @wraps(f)
         def decorator(*args, **kwargs):
             stats = client()
-            with stats.timer(name):
+            with stats.timer(name, tags=tags):
                 return f(*args, **kwargs)
         return decorator
     return wrap
