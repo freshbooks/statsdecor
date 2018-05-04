@@ -24,7 +24,7 @@ class DogStatsdClient(DogStatsd):
         super(DogStatsdClient, self).timing(metric=name, value=value, tags=tags, sample_rate=rate)
 
     def timer(self, name, tags=None):
-        super(DogStatsdClient, self).timed(metric=name, tags=tags)
+        return super(DogStatsdClient, self).timed(metric=name, tags=tags)
 
 
 class StatsdClient(StatsClient):
@@ -54,7 +54,7 @@ class StatsdClient(StatsClient):
 
     def timer(self, name, tags=None):
         self._assert_no_tags(tags)
-        super(StatsdClient, self).timer(stat=name)
+        return super(StatsdClient, self).timer(stat=name)
 
     def _assert_no_tags(self, tags):
         if tags:
