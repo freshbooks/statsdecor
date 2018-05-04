@@ -1,6 +1,8 @@
 import statsdecor
 import pytest
 from mock import patch, Mock
+from datadog.dogstatsd.context import TimedContextManagerDecorator as DatadogTimer
+from statsd.client import Timer as StatsdTimer
 
 
 DEFAULT_RATE=1
@@ -49,10 +51,8 @@ class TestStatsdDefaultClient(object):
         with pytest.raises(ValueError):
             statsdecor.timing('a.metric', delta=DEFAULT_VALUE, tags=self.tags)
 
-    @patch('statsd.client.StatsClient.timer')
-    def test_timer_no_tag(self, mocked_super):
-        statsdecor.timer('a.metric')
-        mocked_super.assert_called_with(stat='a.metric')
+    def test_timer_no_tag(self):
+        assert isinstance(statsdecor.timer('a.metric'), StatsdTimer)
 
     def test_timer_with_tag(self):
         with pytest.raises(ValueError):
@@ -105,12 +105,8 @@ class TestDogStatsdClient(object):
         statsdecor.timing('a.metric', delta=DEFAULT_VALUE, tags=self.tags)
         mocked_super.assert_called_with(metric='a.metric', value=DEFAULT_VALUE, tags=self.tags, sample_rate=DEFAULT_RATE)
 
-    @patch('datadog.dogstatsd.DogStatsd.timed')
-    def test_timer_no_tag(self, mocked_super):
-        statsdecor.timer('a.metric')
-        mocked_super.assert_called_with(metric='a.metric', tags=NO_TAGS)
+    def test_timer_no_tag(self):
+        assert isinstance(statsdecor.timer('a.metric'), DatadogTimer)
 
-    @patch('datadog.dogstatsd.DogStatsd.timed')
-    def test_timer_with_tag(self, mocked_super):
-        statsdecor.timer('a.metric', tags=self.tags)
-        mocked_super.assert_called_with(metric='a.metric', tags=self.tags)
+    def test_timer_with_tag(self):
+        assert isinstance(statsdecor.timer('a.metric', tags=self.tags), DatadogTimer)
