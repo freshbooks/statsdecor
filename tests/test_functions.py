@@ -46,12 +46,22 @@ class BaseFunctionTestCase(object):
     def test_timing(self):
         with stub_client(self.client_class) as stub:
             statsdecor.timing('a.metric', 314159265359)
-            stub.client.timing.assert_called_with('a.metric', 314159265359, 1, None)
+            stub.client.timing.assert_called_with(
+                'a.metric',
+                314159265359,
+                rate=1,
+                tags=None
+            )
 
     def test_timing__with_value_and_rate(self):
         with stub_client(self.client_class) as stub:
             statsdecor.timing('a.metric', 314159265359, 0.1)
-            stub.client.timing.assert_called_with('a.metric', 314159265359, 0.1, None)
+            stub.client.timing.assert_called_with(
+                'a.metric',
+                314159265359,
+                rate=0.1,
+                tags=None
+            )
 
     def test_configure_and_create(self):
         raise NotImplementedError()
