@@ -97,4 +97,4 @@ def timing(name, delta, rate=1, tags=None):
     >>> import statsdecor
     >>> statsdecor.timing('my.metric', 314159265359)
     """
-    return client().timing(name, delta, rate, tags)
+    return client().timing(name, delta, rate=rate, tags=tags)

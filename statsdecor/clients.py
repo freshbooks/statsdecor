@@ -20,7 +20,7 @@ class DogStatsdClient(DogStatsd):
     def gauge(self, name, value=1, rate=1, tags=None):
         super(DogStatsdClient, self).gauge(metric=name, value=value, tags=tags, sample_rate=rate)
 
-    def timing(self, name, value, rate=1, tags=None):
+    def timing(self, name, value, tags=None, rate=1):
         super(DogStatsdClient, self).timing(metric=name, value=value, tags=tags, sample_rate=rate)
 
     def timer(self, name, tags=None):
