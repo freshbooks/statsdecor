@@ -20,11 +20,13 @@ def _create_client(**config):
     client_config = _create_client_config(config, {'host', 'port', 'prefix', 'maxudpsize'})
     return StatsdClient(**client_config)
 
+
 def _create_client_config(raw_config, whitelist_fields):
     client_config = {
         field: raw_config.get(field) for field in whitelist_fields if raw_config.get(field)
     }
     return client_config
+
 
 def configure(*args, **kwargs):
     """Configure the module level statsd client that will
@@ -90,6 +92,7 @@ def timer(name, tags=None):
     Some output
     """
     return client().timer(name, tags)
+
 
 def timing(name, delta, rate=1, tags=None):
     """Sends new timing information. `delta` is in milliseconds.

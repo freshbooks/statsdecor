@@ -7,6 +7,7 @@ from statsdecor.clients import (
     StatsdClient
 )
 
+
 class BaseFunctionTestCase(object):
     def test_incr(self):
         with stub_client(self.client_class) as stub:
@@ -87,6 +88,7 @@ class TestStatsdDefaultClient(BaseFunctionTestCase):
         client = statsdecor.client()
         assert isinstance(client, statsd.StatsClient)
         assert client._addr[1] == 1234, 'port should match'
+
 
 class TestDogStatsdClient(BaseFunctionTestCase):
     def setup(self):

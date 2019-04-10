@@ -1,12 +1,12 @@
 import statsdecor
 import pytest
-from mock import patch, Mock
+from mock import patch
 from datadog.dogstatsd.context import TimedContextManagerDecorator as DatadogTimer
-from statsd.client import Timer as StatsdTimer
+from statsd.client.timer import Timer as StatsdTimer
 
 
-DEFAULT_RATE=1
-DEFAULT_VALUE=1
+DEFAULT_RATE = 1
+DEFAULT_VALUE = 1
 NO_TAGS = None
 
 
@@ -72,8 +72,9 @@ class TestDogStatsdClient(object):
 
     @patch('datadog.dogstatsd.DogStatsd.increment')
     def test_incr_with_tag(self, mocked_super):
-        statsdecor.incr('a.metric',  tags=self.tags)
-        mocked_super.assert_called_with(metric='a.metric', value=DEFAULT_VALUE, tags=self.tags, sample_rate=DEFAULT_RATE)
+        statsdecor.incr('a.metric', tags=self.tags)
+        mocked_super.assert_called_with(
+            metric='a.metric', value=DEFAULT_VALUE, tags=self.tags, sample_rate=DEFAULT_RATE)
 
     @patch('datadog.dogstatsd.DogStatsd.decrement')
     def test_decr_no_tag(self, mocked_super):
@@ -83,7 +84,8 @@ class TestDogStatsdClient(object):
     @patch('datadog.dogstatsd.DogStatsd.decrement')
     def test_decr_with_tag(self, mocked_super):
         statsdecor.decr('a.metric', tags=self.tags)
-        mocked_super.assert_called_with(metric='a.metric', value=DEFAULT_VALUE, tags=self.tags, sample_rate=DEFAULT_RATE)
+        mocked_super.assert_called_with(
+            metric='a.metric', value=DEFAULT_VALUE, tags=self.tags, sample_rate=DEFAULT_RATE)
 
     @patch('datadog.dogstatsd.DogStatsd.gauge')
     def test_gauge_no_tag(self, mocked_super):
@@ -93,7 +95,8 @@ class TestDogStatsdClient(object):
     @patch('datadog.dogstatsd.DogStatsd.gauge')
     def test_gauge_with_tag(self, mocked_super):
         statsdecor.gauge('a.metric', value=DEFAULT_VALUE, tags=self.tags)
-        mocked_super.assert_called_with(metric='a.metric', value=DEFAULT_VALUE, tags=self.tags, sample_rate=DEFAULT_RATE)
+        mocked_super.assert_called_with(
+            metric='a.metric', value=DEFAULT_VALUE, tags=self.tags, sample_rate=DEFAULT_RATE)
 
     @patch('datadog.dogstatsd.DogStatsd.timing')
     def test_timing_no_tag(self, mocked_super):
@@ -103,7 +106,8 @@ class TestDogStatsdClient(object):
     @patch('datadog.dogstatsd.DogStatsd.timing')
     def test_timing_with_tag(self, mocked_super):
         statsdecor.timing('a.metric', delta=DEFAULT_VALUE, tags=self.tags)
-        mocked_super.assert_called_with(metric='a.metric', value=DEFAULT_VALUE, tags=self.tags, sample_rate=DEFAULT_RATE)
+        mocked_super.assert_called_with(
+            metric='a.metric', value=DEFAULT_VALUE, tags=self.tags, sample_rate=DEFAULT_RATE)
 
     def test_timer_no_tag(self):
         assert isinstance(statsdecor.timer('a.metric'), DatadogTimer)

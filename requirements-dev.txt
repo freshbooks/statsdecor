@@ -1,6 +1,6 @@
 -r requirements.txt
 pytest
 flake8
-coverage
 python-coveralls
-mock==1.0.1
+coverage
+mock
