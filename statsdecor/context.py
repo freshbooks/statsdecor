@@ -26,7 +26,7 @@ class StatsContext(object):
 
         def call_thing():
             with ThingyStatsContext() as stats:
-                result = CallThingy()
+                result = thingy_external_call()
                 stats.add_tags('status_code', 'result["status_code"]')
     """
 
@@ -97,7 +97,7 @@ class StatsContext(object):
 
         self._stats.timing(self._metric_duration, self._elapsed, tags=self._tags)
         self._stats.increment(self._metric_completed, tags=self._tags)
-        _log.info('Metrics sent: {}, tags={}, elapsed time={}'.format(
+        _log.debug('Metrics sent: {}, tags={}, elapsed time={}'.format(
             self._metric_base,
             ','.join(self._tags),
             self._elapsed
