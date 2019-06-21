@@ -1,10 +1,10 @@
+from statsdecor import client
 import logging
 from time import time
 
 
 _log = logging.getLogger(__name__)
 
-from statsdecor import client
 
 class StatsContext(object):
     """
