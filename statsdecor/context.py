@@ -8,26 +8,32 @@ _log = logging.getLogger(__name__)
 
 class StatsContext(object):
     """
-        Usage example:
+        A context used for timing and tagging code.  On entering the context,
+        this metric is emitted:
 
-        class ThingyStatsContext(StatsContext):
-            def __init__(self, tags=None):
-                tags = tags or []
-                tags += ['service:thingy']
-                super(ThingyStatsContext, self).__self__('thingy_client', tags=tags)
+            count <metric_base>.attempted with <base_tags>
 
-            def exit_hook(self, exc_type, exc_val, exc_tb):
-                if isinstance(exc_val, PermissionDenied):
-                    self.add_tags('result', 'permissiondenied')
-                elif exc_val is not None:
-                    self.add_tags('result', 'exception')
-                else:
-                    self.add_tags('result', 'success')
+        where `base_tags` is the list passed as `tags` to the constructor.
+        On completition:
 
-        def call_thing():
-            with ThingyStatsContext() as stats:
-                result = thingy_external_call()
-                stats.add_tags('status_code', 'result["status_code"]')
+            time <metric_base>.duration with <base_tags+added_tags>
+            count <metric_base>.completed with <tags+added_tags>
+
+        where "added_tags" are all tags added by calling `add_tags()`.  This
+        can be done at any time inside the context.
+
+        One way to use this is to extend StatsContext for each use.  The
+        constructor is a good place to set default tags and the base metric
+        name.  `exit_hook()` is a great place to classify unhandled exceptions
+        into categories.
+
+        For example, it can be used to create a wrapper around communication
+        client library to collect response time and error rate metrics.  Since
+        most calls to a the same client libraries typically indicate errors
+        in the same way, one custom StatsContext class may be sufficient for
+        all client calls.
+
+        (There's a full example in the README.md)
     """
 
     def __init__(self, metric_base, tags=None, stats=None):
