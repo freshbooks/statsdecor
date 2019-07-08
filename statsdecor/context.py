@@ -8,7 +8,7 @@ _log = logging.getLogger(__name__)
 
 class StatsContext(object):
     """
-        A context used for timing and tagging code.  On entering the context,
+        A context manager used for timing and tagging code.  On entering the context,
         this metric is emitted:
 
             count <metric_base>.attempted with <base_tags>
