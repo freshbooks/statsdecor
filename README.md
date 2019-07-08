@@ -66,7 +66,7 @@ does not raise an error.
 
 ### Context
 
-Statscor includes a context manager that can help measure latency and volume
+Statsdecor includes a context manager that can help measure latency and volume
 while using metric tags to classify their success & failure.  For example,
 suppose you are making a call to a remote service and wish to write a wrapper
 that collects latency, volume and failure metrics.
