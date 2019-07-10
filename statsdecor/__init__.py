@@ -13,7 +13,7 @@ def _create_client(**config):
     vendor = config.pop('vendor', None)
 
     if vendor == 'datadog':
-        client_config = _create_client_config(config, {'host', 'port'})
+        client_config = _create_client_config(config, {'host', 'port', 'use_ms'})
         client_config.update(namespace=config.get('prefix')) if config.get('prefix') else None
         return DogStatsdClient(**client_config)
 
