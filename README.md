@@ -144,5 +144,7 @@ and/or bugfixes.
 1. edit VERSION
 2. commit/pr/merge bump to VERSION
 3. `make tag`
+4. `make test-release` (requires [TestPyPI](https://test.pypi.org/) creds in `~/.pypirc` as `testpypi`)
+5. `make release` (requires [PyPI](https://pypi.org/) creds in `~/.pypirc` as `pypi`)
 
 
