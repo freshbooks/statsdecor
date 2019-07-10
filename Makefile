@@ -53,12 +53,16 @@ coveralls:
 	coverage run --source statsdecor `which py.test` tests/
 
 release: clean
-	python setup.py sdist upload
-	python setup.py bdist_wheel upload
+	python3 setup.py sdist bdist_wheel
+	twine upload --repository pypi dist/*
+
+test-release: clean
+	python3 setup.py sdist bdist_wheel
+	twine upload --repository testpypi dist/*
 
 dist: clean
-	python setup.py sdist
-	python setup.py bdist_wheel
+	python3 setup.py sdist
+	python3 setup.py bdist_wheel
 	ls -l dist
 
 tag:
