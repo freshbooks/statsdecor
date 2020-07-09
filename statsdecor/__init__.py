@@ -51,6 +51,8 @@ def configure(*args, **kwargs):
 
 def client():
     """Get a client instance with the module level configuration."""
+    global _stats_client
+
     if _stats_client is None:
         configure({})
     return _stats_client
