@@ -25,7 +25,6 @@ pip-log.txt
 .coverage
 .tox
 .cache/
-nosetests.xml
 htmlcov
 
 # Complexity
