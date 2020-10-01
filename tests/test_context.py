@@ -1,7 +1,7 @@
+from mock import patch
+
 import statsdecor
 from statsdecor.context import StatsContext
-from nose.tools import eq_, ok_
-from mock import patch
 
 
 class _DerivedContext(StatsContext):
@@ -56,9 +56,9 @@ class TestStatsContext(object):
         print(repr(timing.call_args))
         print(repr(timing.call_args[0]))
         timing.assert_called()
-        eq_(timing.call_args[1]['metric'], 'test.naked.duration')
-        ok_(timing.call_args[1]['value'] > 0)
-        eq_(timing.call_args[1]['tags'], ['invocation:tag', 'newtag:yes'])
+        assert timing.call_args[1]['metric'] == 'test.naked.duration'
+        assert timing.call_args[1]['value'] > 0
+        assert timing.call_args[1]['tags'] == ['invocation:tag', 'newtag:yes']
 
     @patch('datadog.dogstatsd.DogStatsd.increment')
     @patch('datadog.dogstatsd.DogStatsd.timing')
@@ -70,15 +70,15 @@ class TestStatsContext(object):
             )
             s2.add_tag('newtag', 'yes')
 
-        expected_tags = ['always:yup', 'newtag:yes', 'exit:yup',  'exception:none']
+        expected_tags = ['always:yup', 'newtag:yes', 'exit:yup', 'exception:none']
         increment.assert_called_with(
             'test.hello.completed',
             tags=expected_tags
         )
         print(repr(timing))
-        eq_(timing.call_args[1]['metric'], 'test.hello.duration')
-        ok_(timing.call_args[1]['value'] > 0)
-        eq_(timing.call_args[1]['tags'], expected_tags)
+        assert timing.call_args[1]['metric'] == 'test.hello.duration'
+        assert timing.call_args[1]['value'] > 0
+        assert timing.call_args[1]['tags'] == expected_tags
 
     @patch('datadog.dogstatsd.DogStatsd.increment')
     @patch('datadog.dogstatsd.DogStatsd.timing')
@@ -92,18 +92,18 @@ class TestStatsContext(object):
                 s2.add_tag('newtag', 'yes')
                 raise _TestException("this didn't go well")
         except _TestException:
-            ok_(True, 'exception passed through')
+            assert True, 'exception passed through'
         else:
-            ok_(False, 'exception swallowed by context manager')  # pragma: nocover
+            assert False, 'exception swallowed by context manager'  # pragma: nocover
 
-        expected_tags = ['always:yup', 'newtag:yes', 'exit:yup',  'exception:yes']
+        expected_tags = ['always:yup', 'newtag:yes', 'exit:yup', 'exception:yes']
         increment.assert_called_with(
             'test.hello.completed',
             tags=expected_tags
         )
-        eq_(timing.call_args[1]['metric'], 'test.hello.duration')
-        ok_(timing.call_args[1]['value'] > 0)
-        eq_(timing.call_args[1]['tags'], expected_tags)
+        assert timing.call_args[1]['metric'] == 'test.hello.duration'
+        assert timing.call_args[1]['value'] > 0
+        assert timing.call_args[1]['tags'] == expected_tags
 
     @patch('datadog.dogstatsd.DogStatsd.increment')
     @patch('datadog.dogstatsd.DogStatsd.timing')
@@ -120,6 +120,6 @@ class TestStatsContext(object):
             'test.badly.completed',
             tags=expected_tags
         )
-        eq_(timing.call_args[1]['metric'], 'test.badly.duration')
-        ok_(timing.call_args[1]['value'] > 0)
-        eq_(timing.call_args[1]['tags'], expected_tags)
+        assert timing.call_args[1]['metric'] == 'test.badly.duration'
+        assert timing.call_args[1]['value'] > 0
+        assert timing.call_args[1]['tags'] == expected_tags
