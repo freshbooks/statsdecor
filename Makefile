@@ -10,7 +10,6 @@ help:
 	@echo "lint - Check style with flake8."
 	@echo "test - Run tests quickly with the default Python."
 	@echo "test-all - Run tests on every Python version with tox."
-	@echo "coverage - Check code coverage with the default Python."
 	@echo "release - Package and upload a release."
 	@echo "dist - Create tar and whl files."
 
@@ -34,23 +33,23 @@ clean-test:
 	rm -fr .tox/
 	rm -f .coverage
 	rm -fr htmlcov/
+	rm -f coverage.xml
+	rm -f junit.xml
 
 lint:
 	flake8 statsdecor tests
 
 test:
-	py.test tests/
+	py.test --junitxml=junit.xml \
+		--cov=statsdecor \
+		--cov-branch \
+		--cov-report=xml:coverage.xml \
+		--cov-config=setup.cfg \
+		tests
+	coverage report -m
 
 test-all:
 	tox
-
-coverage:
-	coverage run --source statsdecor `which py.test` tests/
-	coverage report -m
-	coverage html
-
-coveralls:
-	coverage run --source statsdecor `which py.test` tests/
 
 release: clean
 	python3 setup.py sdist bdist_wheel

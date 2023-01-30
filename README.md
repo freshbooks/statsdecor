@@ -27,7 +27,6 @@ statsdecor.configure(host='localhost', prefix='superapp.')
 Configuration is generally setup during your application's bootstrap. Once
 set configuration values are re-used in all clients that `statsdecor` creates.
 
-
 ## Usage
 
 You can track metrics with either the module functions, or decorators. Incrementing
@@ -74,7 +73,7 @@ that collects latency, volume and failure metrics.
 With our knowledge about how the client library indicates errors we can make a context manager
 based on StatsContext:
 
-```
+```python
 from statsdecor.context import StatsContext
 
 class FoobarClientMetrics(StatsContext):
@@ -101,7 +100,7 @@ class FoobarClientMetrics(StatsContext):
 
 Now writing wrapper functions with metrics is simple:
 
-```
+```python
 def foobar_get_clients(**args):
     with FoobarClientMetrics(tags=['method:get_clients']) as stats:
         result = call_foobar_get_client(**args)
@@ -124,18 +123,18 @@ Now we can graph:
 * average response time, excluding errors (timeouts will no longer skew the average)
 * volume of errors grouped by method, and/or type
 
-# Development
+## Development
 
-## Testing and coverage
+### Testing and coverage
 
-```
+```shell
 make test
 make coverage
 ```
 
 You can track metrics with either the module functions, or decorators. Incrementing
 
-## Releasing
+### Releasing
 
 statsdecor uses [semver](https://semver.org) for version numbers. Before tagging,
 check for all changes since the last tag for breaking changes, new features,
@@ -146,5 +145,3 @@ and/or bugfixes.
 3. `make tag`
 4. `make test-release` (requires [TestPyPI](https://test.pypi.org/) creds in `~/.pypirc` as `testpypi`)
 5. `make release` (requires [PyPI](https://pypi.org/) creds in `~/.pypirc` as `pypi`)
-
-
