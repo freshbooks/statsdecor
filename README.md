@@ -1,5 +1,7 @@
 # Statsdecor
 
+### Note: `statsdecor` has been deprecated - use [fresh-telemetry](https://github.com/freshbooks/fresh-telemetry) in its place.
+
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.txt)
 [![Build Status](https://api.travis-ci.org/freshbooks/statsdecor.svg)](https://travis-ci.org/freshbooks/statsdecor)
 
